@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=production
+      - MONGO_URL=mongodb://mongo:27017/adoptme_prod
+    depends_on:
+      - mongo
+    networks:
+      - adoptme-network
+
+  mongo:
+    image: mongo:6.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - adoptme-network
+
+volumes:
+  mongo-data:
+
+networks:
+  adoptme-network:
+    driver: bridge

@@ -1,10 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
-import dotenv from "dotenv";
-
-// Cargar variables de entorno
-dotenv.config();
+import { swaggerUi, specs } from "./config/swagger.config.js";
 
 import usersRouter from "./routes/users.router.js";
 import petsRouter from "./routes/pets.router.js";
@@ -14,13 +11,14 @@ import mocksRouter from "./routes/mocks.router.js";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-const connection = mongoose.connect(
-  process.env.MONGO_URL ||
-    `mongodb+srv://coderhouse:codercoder2023@cluster0.wpxpupc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
-);
+const MONGO_URL =
+  process.env.MONGO_URL || `mongodb://localhost:27017/adoptme_test`;
+const connection = mongoose.connect(MONGO_URL);
 
 app.use(express.json());
 app.use(cookieParser());
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use("/api/users", usersRouter);
 app.use("/api/pets", petsRouter);

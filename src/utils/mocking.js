@@ -31,31 +31,12 @@ export const generateMockPet = () => {
   const species = ["dog", "cat", "rabbit", "hamster", "bird", "fish"];
   const randomSpecie = species[Math.floor(Math.random() * species.length)];
 
-  const petNames = [
-    "Max",
-    "Buddy",
-    "Charlie",
-    "Lucy",
-    "Cooper",
-    "Luna",
-    "Daisy",
-    "Milo",
-    "Bella",
-    "Rocky",
-    "Molly",
-    "Jack",
-    "Sophie",
-    "Toby",
-    "Sadie",
-  ];
-  const randomName = petNames[Math.floor(Math.random() * petNames.length)];
-
   return {
-    name: randomName,
+    name: faker.animal.petName(),
     specie: randomSpecie,
     birthDate: faker.date.past({ years: 10 }),
     adopted: false,
-    image: faker.image.url({ category: "animals" }),
+    image: faker.image.urlLoremFlickr({ category: "animals" }),
   };
 };
 
